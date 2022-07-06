@@ -86,12 +86,12 @@ router.post("/", (req, res) => {
 
 router.put("/upvote", (req, res) => {
   // custom static method created in models/Post.js
-  Vote.create({
-    user_id: req.body.user_id,
-    post_id: req.body.post_id,
-  })
-    .then((dbPostData) => res.json(dbPostData))
-    .catch((err) => res.json(err));
+  Post.upvote(req.body, { Vote })
+    .then((updatedPostData) => res.json(updatedPostData))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
 });
 
 router.put("/:id", (req, res) => {
